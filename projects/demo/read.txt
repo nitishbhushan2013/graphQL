@@ -1,0 +1,16 @@
+I am building a new project which is based on Nodejs, Reactjs and Graphql.
+
+Front End : React + Apollo Client 
+Back End : NodeJs + graphql + express + express-graphql
+Database : Mondo DB 
+
+Node packages required :
+express, 
+nodemon, 
+graphql, 
+express-graphql ( help express to communicate with graphql )
+mangoose
+lodash
+
+
+

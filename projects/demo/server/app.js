@@ -1,10 +1,14 @@
 const express = require('express');
 const graphqlHTTP = require('express-graphql');
 const schema = require('./schema/schema');
-
+const mongoose = require('mongoose');
 const app = express();
-const port =9002;
+const port =9003;
 
+mongoose.connect('mongodb://nitish2019:nitish123@ds163630.mlab.com:63630/nodesamples');
+mongoose.connection.once('open', ()=>{
+    console.log("database connetion")
+});
 
 // setup middleware for the graphql entry point
 app.use('/graphql', graphqlHTTP({
