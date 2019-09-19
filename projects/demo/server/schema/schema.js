@@ -1,8 +1,11 @@
 const graphql = require('graphql');
-const {GraphQLObjectType,
-     GraphQLString, 
-     GraphQLSchema,
-    GraphQLID} = graphql; //ES6: dereferencing, get properties from graphql
+const {
+    GraphQLObjectType,
+    GraphQLString, 
+    GraphQLSchema,
+    GraphQLID,
+    GraphQLList
+} = graphql; //ES6: dereferencing, get properties from graphql
 const _ = require('lodash');
 
 const books = [
@@ -10,7 +13,8 @@ const books = [
     {name:'Go Set a Watchman', genre:'Classic', id:'2', authorId:'1'},
     {name:'The Hollow Hills', genre:'Legend', id:'3', authorId:'2'},
     {name:'The Martian', genre:'Sci-Fi', id:'4', authorId:'3'},
-    {name:'The Crystal Cave', genre:'Legend', id:'5', authorId:'3'}
+    {name:'The Crystal Cave', genre:'Legend', id:'5', authorId:'3'},
+    {name:'The Last Enchantment', genre:'Legend', id:'6', authorId:'2'},
 ]
 
 const authors = [
@@ -41,7 +45,7 @@ This schema will hold three important steps
  */
 const BookType = new GraphQLObjectType({
     name: 'Book',
-    fields : ()=>({
+    fields : ()=>({ // function declaration is necessary to perform Hoisting so that AuthorType should not give    referenceError. 
         id : {type: GraphQLID},
         name : {type: GraphQLString},
         genre : {type: GraphQLString},
@@ -55,12 +59,30 @@ const BookType = new GraphQLObjectType({
     })
 });
 
+/**
+ * { query pattern : 
+ *  author(id="2"){
+ *      name
+ *      country
+ *      id
+ *      books {
+ *          name
+ *      }
+ *   }
+ * }
+ */
 const AuthorType = new GraphQLObjectType({
     name: 'Author',
     fields : ()=>({
         id : {type: GraphQLID},
         name : {type: GraphQLString},
-        country : {type: GraphQLString}
+        country : {type: GraphQLString},
+        books:{
+            type: new GraphQLList(BookType),
+            resolve(parent, args){
+                return _.filter(books,{authorId:parent.id})
+            }
+        }
     })
 });
 
