@@ -6,17 +6,17 @@ const {GraphQLObjectType,
 const _ = require('lodash');
 
 const books = [
-    {name:'To kill a Mockingbird', genre:'Classic', id:'1'},
-    {name:'Go Set a Watchman', genre:'Classic', id:'2'},
-    {name:'The Hollow Hills', genre:'Legend', id:'3'},
-    {name:'The Martian', genre:'Sci-Fi', id:'4'},
-    {name:'The Crystal Cave', genre:'Legend', id:'5'}
+    {name:'To kill a Mockingbird', genre:'Classic', id:'1', authorId:'1'},
+    {name:'Go Set a Watchman', genre:'Classic', id:'2', authorId:'1'},
+    {name:'The Hollow Hills', genre:'Legend', id:'3', authorId:'2'},
+    {name:'The Martian', genre:'Sci-Fi', id:'4', authorId:'3'},
+    {name:'The Crystal Cave', genre:'Legend', id:'5', authorId:'3'}
 ]
 
 const authors = [
     {name:'Harper Lee', country:'USA', id:'1'},
-    {name:'Mary Stewart', country:'UK', id:'3'},
-    {name:'Andy Weir', country:'USA', id:'4'}
+    {name:'Mary Stewart', country:'UK', id:'2'},
+    {name:'Andy Weir', country:'USA', id:'3'}
    
 ]
 
@@ -27,12 +27,31 @@ This schema will hold three important steps
  3. RootQuery definition : These will acts as a entry point to the schema 
 
 */
+
+/**
+ * { query pattern : 
+ *  book(id="2"){
+ *      name
+ *      genre
+ *      author {
+ *          name
+ *      }
+ *   }
+ * }
+ */
 const BookType = new GraphQLObjectType({
     name: 'Book',
     fields : ()=>({
         id : {type: GraphQLID},
         name : {type: GraphQLString},
-        genre : {type: GraphQLString}
+        genre : {type: GraphQLString},
+        author : {
+            type:AuthorType,
+            resolve(parent, args){
+                console.log(parent)
+                return _.find(authors,{id:parent.authorId})
+            }
+        }
     })
 });
 
