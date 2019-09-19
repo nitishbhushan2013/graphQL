@@ -10,7 +10,9 @@ const port =9002;
 app.use('/graphql', graphqlHTTP({
     // contain the graphql schema 
     //schema : schema
-    schema //ES6 convention
+    schema, //ES6 convention
+    graphiql:true // we want to use this dummy application to fire the query and get the response
+
 }))
 app.listen(port, ()=>{
     console.log("server is listening at port "+port);

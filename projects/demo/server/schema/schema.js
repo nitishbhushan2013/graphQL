@@ -1,15 +1,24 @@
 const graphql = require('graphql');
-const {GraphQLObjectType, GraphQLString, GraphQLSchema} = graphql; //ES6: dereferencing, get properties from graphql
+const {GraphQLObjectType,
+     GraphQLString, 
+     GraphQLSchema,
+    GraphQLID} = graphql; //ES6: dereferencing, get properties from graphql
 const _ = require('lodash');
 
 const books = [
-    {name:'To kill a Mockingbird', genre:'Classic', id:1},
-    {name:'1984', genre:'Classic', id:2},
-    {name:'The Hollow Hills', genre:'Legend', id:3},
-    {name:'The Martian', genre:'Sci-Fi', id:4},
-    {name:'The Notebook', genre:'Romance', id:5}
+    {name:'To kill a Mockingbird', genre:'Classic', id:'1'},
+    {name:'Go Set a Watchman', genre:'Classic', id:'2'},
+    {name:'The Hollow Hills', genre:'Legend', id:'3'},
+    {name:'The Martian', genre:'Sci-Fi', id:'4'},
+    {name:'The Crystal Cave', genre:'Legend', id:'5'}
 ]
 
+const authors = [
+    {name:'Harper Lee', country:'USA', id:'1'},
+    {name:'Mary Stewart', country:'UK', id:'3'},
+    {name:'Andy Weir', country:'USA', id:'4'}
+   
+]
 
 /*
 This schema will hold three important steps 
@@ -21,9 +30,18 @@ This schema will hold three important steps
 const BookType = new GraphQLObjectType({
     name: 'Book',
     fields : ()=>({
-        id : {type: GraphQLString},
+        id : {type: GraphQLID},
         name : {type: GraphQLString},
         genre : {type: GraphQLString}
+    })
+});
+
+const AuthorType = new GraphQLObjectType({
+    name: 'Author',
+    fields : ()=>({
+        id : {type: GraphQLID},
+        name : {type: GraphQLString},
+        country : {type: GraphQLString}
     })
 });
 
@@ -40,10 +58,17 @@ const RootQuery = new GraphQLObjectType({
         */
         book:{ // query to get the book detail based on bookId
             type:BookType,
-            args:{id:{type:GraphQLString}},
+            args:{id:{type:GraphQLID}},
             resolve(parent,args){
                 // code to get data from the server , DB 
                 return _.find(books,{id:args.id})
+            }
+        }, 
+        author:{
+            type: AuthorType,
+            args:{id:{type:GraphQLID}},
+            resolve(parent,args){
+                return _.find(authors,{id:args.id})
             }
         }
     }
