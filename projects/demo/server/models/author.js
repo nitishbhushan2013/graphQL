@@ -5,6 +5,7 @@ const authorSchema = new Schema({
     name: String,
     country:String
     
-})
+});
+module.exports = mongoose.model('Author',authorSchema);
 
-module.export = mongoose.model('Author',authorSchema);
+

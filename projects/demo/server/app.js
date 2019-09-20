@@ -7,7 +7,7 @@ const port =9003;
 
 mongoose.connect('mongodb://nitish2019:nitish123@ds163630.mlab.com:63630/nodesamples');
 mongoose.connection.once('open', ()=>{
-    console.log("database connetion")
+    console.log("database connetion is succeessful")
 });
 
 // setup middleware for the graphql entry point
