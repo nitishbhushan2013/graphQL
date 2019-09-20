@@ -8,7 +8,8 @@ const {
     GraphQLString, 
     GraphQLSchema,
     GraphQLID,
-    GraphQLList
+    GraphQLList,
+    GraphQLNonNull
 } = graphql; //ES6: dereferencing, get properties from graphql
 const _ = require('lodash');
 
@@ -107,7 +108,7 @@ const RootQuery = new GraphQLObjectType({
         */
         book:{ // query to get the book detail based on bookId
             type:BookType,
-            args:{id:{type:GraphQLID}},
+            args:{id:{type:new GraphQLNonNull(GraphQLID) }},
             resolve(parent,args){
                 // code to get data from the server , DB 
                 //return _.find(books,{id:args.id})
@@ -116,7 +117,7 @@ const RootQuery = new GraphQLObjectType({
         }, 
         author:{
             type: AuthorType,
-            args:{id:{type:GraphQLID}},
+            args:{id:{type: new GraphQLNonNull(GraphQLID)}},
             resolve(parent,args){
                 //return _.find(authors,{id:args.id})
                 return Authors.findById(args.id);
@@ -145,8 +146,8 @@ const Mutation = new GraphQLObjectType({
         addAuthor:{
             type: AuthorType,
             args:{
-                name:{type: GraphQLString},
-                country:{type: GraphQLString}
+                name:{type: new GraphQLNonNull(GraphQLString)},
+                country:{type: new GraphQLNonNull(GraphQLString)}
             },
             resolve(parent, args){
                 let authorObj = new Authors({
@@ -160,9 +161,9 @@ const Mutation = new GraphQLObjectType({
         addBook:{
             type: BookType,
             args:{
-                name:{type: GraphQLString},
-                genre:{type: GraphQLString},
-                authorId:{type:GraphQLID}
+                name:{type: new GraphQLNonNull(GraphQLString)},
+                genre:{type: new GraphQLNonNull(GraphQLString)},
+                authorId:{type:new GraphQLNonNull(GraphQLID)}
             },
             resolve(parent, args){
                 let bookObj = new Books({
