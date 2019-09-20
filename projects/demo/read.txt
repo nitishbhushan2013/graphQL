@@ -5,12 +5,32 @@ Back End : NodeJs + graphql + express + express-graphql
 Database : Mondo DB 
 
 Node packages required :
+
+BackEnd| Serviceside
+-----------------------
 express, 
 nodemon, 
 graphql, 
 express-graphql ( help express to communicate with graphql )
+
+Database
+---------
 mangoose
 lodash
+
+UI
+---
+create-react-app
+
+Apollo Client
+------------
+apollo-boost 
+@apollo/react-hooks 
+graphql
+
+
+
+
 
 
 
