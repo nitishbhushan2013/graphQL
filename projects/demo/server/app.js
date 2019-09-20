@@ -3,8 +3,11 @@ const graphqlHTTP = require('express-graphql');
 const schema = require('./schema/schema');
 const mongoose = require('mongoose');
 const app = express();
+const cors = require('cors');
+
 const port =9003;
 
+app.use(cors());
 mongoose.connect('mongodb://nitish2019:nitish123@ds163630.mlab.com:63630/nodesamples');
 mongoose.connection.once('open', ()=>{
     console.log("database connetion is succeessful")

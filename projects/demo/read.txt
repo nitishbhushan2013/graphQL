@@ -27,6 +27,7 @@ Apollo Client
 apollo-boost 
 @apollo/react-hooks 
 graphql
+react-apollo
 
 
 
