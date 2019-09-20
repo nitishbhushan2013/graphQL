@@ -1,10 +1,11 @@
 import React from 'react';
-
+import BookList from './components/BookList/BookList';
 
 function App() {
   return (
     <div className="App">
-      <h1> Ready for rock and roll </h1>
+      <h1> GraphQL DEMO Project : Reading List</h1>
+      <BookList/>
     </div>
   );
 }
