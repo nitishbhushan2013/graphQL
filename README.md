@@ -1,8 +1,7 @@
 # graphQL
 
 
-Project overview
-
+GraphQL Landscape
 ![GraphQL overview](https://github.com/nitishbhushan2013/graphQL/blob/master/images/graphQL-architecture.png)
 
 
